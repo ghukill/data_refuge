@@ -1,6 +1,7 @@
 import os
 from bs4 import BeautifulSoup
 import re
+import urllib2
 
 
 class Tree(object):
@@ -10,6 +11,11 @@ class Tree(object):
 		print "instantiating %s" % filename
 		self.soup = BeautifulSoup(open('data/trees/%s' % filename))
 
+	def get_pubs(self):
+		table = self.soup.findAll("table", { "class" : "data_new" })
+		table.pop(0)
+		return table
+
 
 class Publication(object):
 
@@ -17,10 +23,24 @@ class Publication(object):
 
 		print "instantiating publication chunk %s" % bs4_pub
 		self.pub = bs4_pub
+		
+		# get main a tag
 		self.a = self.pub.find('a')
 
-		# debug
-		print self.a
+		# get id
+		self.id = re.findall(r'&id=([\d]+)', self.a.attrs['href'])[0]
+		print self.id
+
+		# derive details page
+		self.details_url = 'https://www1.eere.energy.gov/library/viewdetails.aspx?productid=%s&Page=2' % (self.id)
+
+	def write_details_to_disk(self):
+
+		page_html = urllib2.urlopen(self.details_url).read()
+		with open('data/pub_details/%s.html' % self.id, 'w') as f:
+			f.write(page_html)
+
+
 
 
 
@@ -38,13 +58,13 @@ if __name__ == '__main__':
 		# soup = BeautifulSoup(open('trees/%s' % tree))
 		tree = Tree(tree)
 
-		# get table with links
-		table = tree.soup.findAll("table", { "class" : "data_new" })
+		# # get table with links
+		# table = tree.soup.findAll("table", { "class" : "data_new" })
 
-		# pop first
-		table.pop(0)
+		# # pop first
+		# table.pop(0)
 
-		for pub in table:
+		for pub in tree.get_pubs():
 
 			publication = Publication(pub)
 
