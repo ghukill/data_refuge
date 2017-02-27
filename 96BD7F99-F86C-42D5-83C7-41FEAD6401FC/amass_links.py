@@ -2,6 +2,18 @@ import os
 from bs4 import BeautifulSoup
 import re
 import urllib2
+import json
+
+
+class Manifest(object):
+
+	def __init__(self):
+		self.publications = []
+
+	def to_json(self):
+		print "writing manifest as json"
+		with open('data/manifest.json','w') as f:
+			f.write(json.dumps(self.publications))
 
 
 class Tree(object):
@@ -9,7 +21,7 @@ class Tree(object):
 	def __init__(self, filename):
 
 		print "instantiating %s" % filename
-		self.soup = BeautifulSoup(open('data/trees/%s' % filename))
+		self.soup = BeautifulSoup(open('trees/%s' % filename))
 		self.details_write_fail = []
 
 	def get_pubs(self):
@@ -43,14 +55,20 @@ class TopicPublication(object):
 		print "wrote %s to disk." % self.id
 		return True
 
+
 class DetailsPublication(object):
 
-	def __init__(self, pub_details_filename):
-		self.filename = pub_details_filename
-		self.soup = BeautifulSoup(open('data/pub_details/%s' % self.filename))
+	def __init__(self, filename):
+		self.filename = filename
+		self.soup = BeautifulSoup(open('data/details_html/%s' % self.filename))
 		self.meta_table = self.soup.findAll('table')
 		self.metadata = {
-			'Title':None
+			'Title':None,
+			'details_html_relative_path':'data/details_html/%s' % self.filename,
+			'binary':{
+				'relative_file_path':None,
+				'downloaded':None
+			}
 		}
 
 
@@ -66,12 +84,34 @@ class DetailsPublication(object):
 			self.metadata[cols[0].text.strip()] = cols[1].text.strip()
 
 
+	def check_if_downloaded(self):
+		filename = self.metadata['URL'].split("/")[-1]
+		filename_path = 'data/pdfs/%s' % filename
+		print filename
+
+		if os.path.exists(filename_path):
+			print "file exists, skipping download"
+			self.metadata['binary']['relative_file_path'] = filename_path
+			self.metadata['binary']['downloaded'] = True
+
+		else:
+			print "downloading %s" % self.metadata['URL']
+			try:
+				response = urllib2.urlopen(self.metadata['URL'])
+				with open(filename_path,'w') as f:
+					f.write(response.read())
+				self.metadata['binary']['relative_file_path'] = filename_path
+				self.metadata['binary']['downloaded'] = True
+			except:
+				self.metadata['binary']['relative_file_path'] = False
+				self.metadata['binary']['downloaded'] = False
+
 
 
 # iterate through html pages, extract publication details
 def get_all_publication_details():
 	
-	trees = [ f for f in os.listdir('data/trees') if f.endswith('.html') ]
+	trees = [ f for f in os.listdir('trees') if f.endswith('.html') ]
 	print trees
 	for tree in trees:
 
@@ -89,15 +129,47 @@ def get_all_publication_details():
 			try:
 				publication.write_details_to_disk()
 			except:
-				print "########### ERROR ############"
 				tree.details_write_fail.append(pub.id)
 
 
 
+def download_and_parse(m):
+	files = os.listdir('data/details_html')
+	for details_html in files:
+		print details_html
+		dpub = DetailsPublication(details_html)
+
+		# generate metadata
+		dpub.parse_metadata_from_table()
+
+		# check download
+		dpub.check_if_downloaded()
+
+		# append to manifest
+		m.publications.append(dpub.metadata)
+
 
 
 # as script
-# if __name__ == '__main__':
+if __name__ == '__main__':
+
+	# final run to assemble
+	m = Manifest()
+
+	# download all pdfs and parse
+	download_and_parse(m)
+
+	# write to file
+	m.to_json()
+
+
+
+
+
+
+
+
+
 
 
 
