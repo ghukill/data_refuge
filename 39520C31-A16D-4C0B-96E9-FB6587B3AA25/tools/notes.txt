@@ -1,0 +1,8 @@
+Used Filezilla to recursively download the entirety of the underlying data @ ftp://ftp.fec.gov/FEC/ per notes from the research phase:
+"Turns out all of the raw data is available via FTP: ftp://ftp.fec.gov/FEC/"
+
+Organization:
+
+The raw files from the FTP server are located in "data/ftp_raw_data".  Files needed for sensemaking of the data are in "data/control_files".
+
+
