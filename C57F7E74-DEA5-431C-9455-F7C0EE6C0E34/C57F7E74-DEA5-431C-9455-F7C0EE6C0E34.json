@@ -1,0 +1,15 @@
+{
+	"Date of capture": "Sun Mar 05 2017 19:07:20 GMT-0500 (EST)",
+	"File formats contained in package": "PDF",
+	"Free text description of capture process": "chrome extensions to identify links to target PDFs and wget loop to DL target PDFs",
+	"Individual source or seed URL": "http://blog.nssl.noaa.gov/nsslnews/archive/",
+	"Institution facilitating the data capture creation and packaging": "",
+	"Name of package creator": "ghukill",
+	"Name of resource": "",
+	"Type(s) of content in package": "NOAA's National Severe Storms Lab reports from 1995-2008. ",
+	"UUID": "C57F7E74-DEA5-431C-9455-F7C0EE6C0E34",
+	"recommended_approach": "Download PDFs ",
+	"significance": "NOAA's National Severe Storms Lab reports from 1995-2008. ",
+	"title": "Archive | NSSL News",
+	"url": "http://blog.nssl.noaa.gov/nsslnews/archive/"
+}
