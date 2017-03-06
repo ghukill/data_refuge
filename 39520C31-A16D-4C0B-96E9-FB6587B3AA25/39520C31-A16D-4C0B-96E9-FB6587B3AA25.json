@@ -5,7 +5,7 @@
 	"Individual source or seed URL": "http://fec.gov/data",
 	"Institution facilitating the data capture creation and packaging": "",
 	"Name of package creator": "ghukill",
-	"Name of resource": "",
+	"Name of resource": "FEC advanced data",
 	"Type(s) of content in package": "Researcher 1: broken link.  This might work instead: http://www.fec.gov/disclosure.shtml\nResearcher 2 (cleaned up by Harvester): \nhttps://beta.fec.gov/data/: new UI for the dataset.\nhttp://www.fec.gov/portal/download.shtml: Download portal.\nhttp://www.fec.gov/finance/disclosure/ftpdet.shtml: \"Detailed Files About Candidates, Parties and Other Committees\"\nhttp://www.fec.gov/finance/disclosure/ftp_download.shtml: Downloadable Data Files",
 	"UUID": "39520C31-A16D-4C0B-96E9-FB6587B3AA25",
 	"recommended_approach": "There appear to be downloadable files at http://www.fec.gov/portal/download.shtml. It's unclear if the new tool at https://beta.fec.gov tracks the same data or not. My strategy:\n\n0. Make sense of the data to some extent.\n1. Download all of the downloadable files using some wget scraper.\n2. Verify whether or not the downloaded dataset corresponds to beta.fec.gov.\n\n# Understanding the data\n\nOk, so it's somewhat convoluted. For example in the individual schema, rather than specifying recipient explicitly, an ID is specified instead. To make sense of the data you'd need to join individual contributions (https://goo.gl/lS9HPY) with the master committee data (https://goo.gl/eKdcv4). \n\n# Downloading the data\n\nTurns out all of the raw data is available via FTP: ftp://ftp.fec.gov/FEC/",

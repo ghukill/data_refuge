@@ -1,0 +1,103 @@
+﻿
+.calloutwhite {  width:345px;
+ color:#000;
+ background-color: #ffffff;
+ border:1px solid #ccc;
+ padding:8px;
+
+ float:right; 
+ position:relative;
+ }
+
+/* Checkbox List*/
+.verticalCheckboxList td
+{
+	padding: 3px 0;
+}
+
+.verticalCheckboxList label
+{
+	padding-left:0.4em; padding-right:1em; 
+	font-size:.9em;
+}
+
+
+/* Details View*/
+.DetailViewData td
+{
+	padding: 5px 5px;
+	font-size:.9em;
+	text-align: left;
+	margin:0 0 12px 0;
+	line-height:1.4em;
+}
+
+.listBoxData 
+{
+    font-size:.9em;
+    padding: 5px 5px;
+}
+/* table */
+
+/* Data Tables */
+table.data_new	{	border-top : none;
+			border-left : none font-size:.95em; margin-bottom:12px;}
+
+caption {font-size: 1.1em; font-weight:bold; padding:6px; background-color:#D4E5D5; border:1px solid #ccc; border-bottom:none; line-height:1.3em; text-align:center;}
+
+caption.blue { background-color:#CCD6DB;}
+
+table.data_new td	{	border-right : none;
+			border-bottom : none; 
+			padding:5px;
+			line-height:1.3em;
+			text-align:left; vertical-align:top
+			}
+
+tr.grey	{	background-color:#EEE;}
+
+table.data_new th	{	
+			border-right : 1px solid #CCC;
+			border-bottom : 1px solid #CCC; 
+			padding:5px;
+			font-weight:bold;
+			line-height:1.3em;
+			}
+
+fieldset { border:1px solid #CCC; }
+legend { font-size:100%; font-weight:bold; color:#900;}
+
+div#breadcrumb2 {
+	font-size:.85em;
+	font-weight:bold;
+	color:#3C4349;
+	margin-bottom:24px;
+	float:left;
+}
+
+div#breadcrumb2 a { 
+	color:#3C4349;
+}
+div#breadcrumb2 a:hover{
+	color:#ba4f16;
+}
+
+ol li
+{
+    list-style-type:decimal;
+    display:list-item;
+    
+}
+
+p + ul li {
+    list-style-type:square;
+    display:list-item;
+	margin-left:1em;
+}
+
+#leftnav li a {
+    color:#333 !important;
+	padding: 10px 0px 10px 15px !important;
+	width: 150px !important;
+	white-space: nowrap;
+}
